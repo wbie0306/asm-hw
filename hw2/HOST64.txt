@@ -1,0 +1,50 @@
+; GCC 14.2.0 -O0，Windows x86-64 反汇编，供对照学习。
+Disassembly of section .text:
+
+0000000140001450 <main>:
+   140001450:	55                   	push   rbp
+   140001451:	48 89 e5             	mov    rbp,rsp
+   140001454:	48 83 ec 30          	sub    rsp,0x30
+   140001458:	e8 23 01 00 00       	call   140001580 <__main>
+   14000145d:	c7 45 fc 00 00 00 00 	mov    DWORD PTR [rbp-0x4],0x0 ; 行号置零
+   140001464:	eb 4e                	jmp    1400014b4 <main+0x64>
+   140001466:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0 ; 列号置零
+   14000146d:	eb 31                	jmp    1400014a0 <main+0x50>
+   14000146f:	8b 55 fc             	mov    edx,DWORD PTR [rbp-0x4]
+   140001472:	89 d0                	mov    eax,edx
+   140001474:	01 c0                	add    eax,eax
+   140001476:	01 d0                	add    eax,edx
+   140001478:	c1 e0 02             	shl    eax,0x2 ; 将 3 倍行号再乘 4
+   14000147b:	01 d0                	add    eax,edx
+   14000147d:	8d 50 61             	lea    edx,[rax+0x61] ; 13 倍行号加上 a 的 ASCII 码（97）
+   140001480:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+   140001483:	01 d0                	add    eax,edx
+   140001485:	89 c1                	mov    ecx,eax
+   140001487:	e8 f4 13 00 00       	call   140002880 <putchar> ; 输出 ECX 中的字符
+   14000148c:	83 7d f8 0c          	cmp    DWORD PTR [rbp-0x8],0xc ; 比较列号与 12
+   140001490:	74 0a                	je     14000149c <main+0x4c>
+   140001492:	b9 20 00 00 00       	mov    ecx,0x20
+   140001497:	e8 e4 13 00 00       	call   140002880 <putchar> ; 输出 ECX 中的字符
+   14000149c:	83 45 f8 01          	add    DWORD PTR [rbp-0x8],0x1
+   1400014a0:	83 7d f8 0c          	cmp    DWORD PTR [rbp-0x8],0xc ; 比较列号与 12
+   1400014a4:	7e c9                	jle    14000146f <main+0x1f>
+   1400014a6:	b9 0a 00 00 00       	mov    ecx,0xa
+   1400014ab:	e8 d0 13 00 00       	call   140002880 <putchar> ; 输出 ECX 中的字符
+   1400014b0:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1
+   1400014b4:	83 7d fc 01          	cmp    DWORD PTR [rbp-0x4],0x1 ; 比较行号与 1
+   1400014b8:	7e ac                	jle    140001466 <main+0x16>
+   1400014ba:	b8 00 00 00 00       	mov    eax,0x0
+   1400014bf:	48 83 c4 30          	add    rsp,0x30
+   1400014c3:	5d                   	pop    rbp
+   1400014c4:	c3                   	ret
+   1400014c5:	90                   	nop
+   1400014c6:	90                   	nop
+   1400014c7:	90                   	nop
+   1400014c8:	90                   	nop
+   1400014c9:	90                   	nop
+   1400014ca:	90                   	nop
+   1400014cb:	90                   	nop
+   1400014cc:	90                   	nop
+   1400014cd:	90                   	nop
+   1400014ce:	90                   	nop
+   1400014cf:	90                   	nop
