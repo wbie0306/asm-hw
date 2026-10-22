@@ -1,0 +1,29 @@
+; GCC 14.2.0 -O0，Windows x86-64 反汇编，供对照学习。
+Disassembly of section .text:
+
+0000000140001450 <main>:
+   140001450:	55                   	push   rbp
+   140001451:	48 89 e5             	mov    rbp,rsp
+   140001454:	48 83 ec 30          	sub    rsp,0x30
+   140001458:	e8 f3 00 00 00       	call   140001550 <__main>
+   14000145d:	c7 45 f8 00 00 00 00 	mov    DWORD PTR [rbp-0x8],0x0 ; 累加值置零
+   140001464:	c7 45 fc 01 00 00 00 	mov    DWORD PTR [rbp-0x4],0x1 ; 计数从 1 开始
+   14000146b:	eb 0a                	jmp    140001477 <main+0x27>
+   14000146d:	8b 45 fc             	mov    eax,DWORD PTR [rbp-0x4]
+   140001470:	01 45 f8             	add    DWORD PTR [rbp-0x8],eax ; 累加当前计数
+   140001473:	83 45 fc 01          	add    DWORD PTR [rbp-0x4],0x1 ; 计数加一
+   140001477:	83 7d fc 64          	cmp    DWORD PTR [rbp-0x4],0x64 ; 按无符号数比较 i 与 100
+   14000147b:	76 f0                	jbe    14000146d <main+0x1d> ; i 不大于 100 时继续
+   14000147d:	8b 45 f8             	mov    eax,DWORD PTR [rbp-0x8]
+   140001480:	89 c2                	mov    edx,eax ; printf 第二个参数：累加值
+   140001482:	48 8d 05 77 2b 00 00 	lea    rax,[rip+0x2b77]        # 140004000 <.rdata>
+   140001489:	48 89 c1             	mov    rcx,rax ; printf 第一个参数：格式串
+   14000148c:	e8 ef 10 00 00       	call   140002580 <printf> ; 库函数将整数转为十进制输出
+   140001491:	b8 00 00 00 00       	mov    eax,0x0
+   140001496:	48 83 c4 30          	add    rsp,0x30
+   14000149a:	5d                   	pop    rbp
+   14000149b:	c3                   	ret
+   14000149c:	90                   	nop
+   14000149d:	90                   	nop
+   14000149e:	90                   	nop
+   14000149f:	90                   	nop
