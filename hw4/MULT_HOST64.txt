@@ -1,0 +1,70 @@
+; Apple clang version 21.0.0 (clang-2100.4.1.1)
+; macOS x86-64，-O0；真实目标文件反汇编（AT&T 语法）。
+; 不是 8086 源码；重定位将在链接时填入最终地址。
+
+MULT.o:	file format mach-o 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+
+0000000000000000 <_main>:
+       0: 55                           	pushq	%rbp # 保存调用者的栈帧寄存器
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 83 ec 10                  	subq	$0x10, %rsp # 分配栈空间
+       8: c7 45 fc 00 00 00 00         	movl	$0x0, -0x4(%rbp)
+       f: 48 8d 3d 99 00 00 00         	leaq	0x99(%rip), %rdi        ## 0xaf <_print_entry+0x2f>
+		0000000000000012:  X86_64_RELOC_SIGNED	__cstring
+      16: e8 00 00 00 00               	callq	0x1b <_main+0x1b> # 过程调用；目标符号见下一行重定位记录
+		0000000000000017:  X86_64_RELOC_BRANCH	_puts
+      1b: c7 45 f8 09 00 00 00         	movl	$0x9, -0x8(%rbp)
+      22: 83 7d f8 00                  	cmpl	$0x0, -0x8(%rbp) # 比较循环边界或乘积
+      26: 76 4e                        	jbe	0x76 <_main+0x76>
+      28: c7 45 f4 01 00 00 00         	movl	$0x1, -0xc(%rbp)
+      2f: 8b 45 f4                     	movl	-0xc(%rbp), %eax
+      32: 3b 45 f8                     	cmpl	-0x8(%rbp), %eax # 比较循环边界或乘积
+      35: 77 2a                        	ja	0x61 <_main+0x61> # 无符号数越界时退出循环
+      37: 8b 7d f8                     	movl	-0x8(%rbp), %edi
+      3a: 8b 75 f4                     	movl	-0xc(%rbp), %esi
+      3d: e8 00 00 00 00               	callq	0x42 <_main+0x42> # 过程调用；目标符号见下一行重定位记录
+		000000000000003e:  X86_64_RELOC_BRANCH	_print_entry
+      42: 8b 45 f4                     	movl	-0xc(%rbp), %eax
+      45: 3b 45 f8                     	cmpl	-0x8(%rbp), %eax # 比较循环边界或乘积
+      48: 73 0a                        	jae	0x54 <_main+0x54>
+      4a: bf 09 00 00 00               	movl	$0x9, %edi
+      4f: e8 00 00 00 00               	callq	0x54 <_main+0x54> # 过程调用；目标符号见下一行重定位记录
+		0000000000000050:  X86_64_RELOC_BRANCH	_putchar
+      54: eb 00                        	jmp	0x56 <_main+0x56> # 跳转至循环或后续代码
+      56: 8b 45 f4                     	movl	-0xc(%rbp), %eax
+      59: 83 c0 01                     	addl	$0x1, %eax
+      5c: 89 45 f4                     	movl	%eax, -0xc(%rbp)
+      5f: eb ce                        	jmp	0x2f <_main+0x2f> # 跳转至循环或后续代码
+      61: bf 0a 00 00 00               	movl	$0xa, %edi
+      66: e8 00 00 00 00               	callq	0x6b <_main+0x6b> # 过程调用；目标符号见下一行重定位记录
+		0000000000000067:  X86_64_RELOC_BRANCH	_putchar
+      6b: 8b 45 f8                     	movl	-0x8(%rbp), %eax
+      6e: 83 c0 ff                     	addl	$-0x1, %eax
+      71: 89 45 f8                     	movl	%eax, -0x8(%rbp)
+      74: eb ac                        	jmp	0x22 <_main+0x22> # 跳转至循环或后续代码
+      76: 31 c0                        	xorl	%eax, %eax
+      78: 48 83 c4 10                  	addq	$0x10, %rsp
+      7c: 5d                           	popq	%rbp
+      7d: c3                           	retq # 返回调用者
+      7e: 66 90                        	nop
+
+0000000000000080 <_print_entry>:
+      80: 55                           	pushq	%rbp # 保存调用者的栈帧寄存器
+      81: 48 89 e5                     	movq	%rsp, %rbp
+      84: 48 83 ec 10                  	subq	$0x10, %rsp # 分配栈空间
+      88: 89 7d fc                     	movl	%edi, -0x4(%rbp)
+      8b: 89 75 f8                     	movl	%esi, -0x8(%rbp)
+      8e: 8b 75 fc                     	movl	-0x4(%rbp), %esi
+      91: 8b 55 f8                     	movl	-0x8(%rbp), %edx
+      94: 8b 4d fc                     	movl	-0x4(%rbp), %ecx
+      97: 0f af 4d f8                  	imull	-0x8(%rbp), %ecx # 计算整数乘积
+      9b: 48 8d 3d 1e 00 00 00         	leaq	0x1e(%rip), %rdi        ## 0xc0 <_print_entry+0x40>
+		000000000000009e:  X86_64_RELOC_SIGNED	__cstring
+      a2: b0 00                        	movb	$0x0, %al
+      a4: e8 00 00 00 00               	callq	0xa9 <_print_entry+0x29> # 过程调用；目标符号见下一行重定位记录
+		00000000000000a5:  X86_64_RELOC_BRANCH	_printf
+      a9: 48 83 c4 10                  	addq	$0x10, %rsp
+      ad: 5d                           	popq	%rbp
+      ae: c3                           	retq # 返回调用者

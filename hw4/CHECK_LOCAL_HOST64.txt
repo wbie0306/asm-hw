@@ -1,0 +1,96 @@
+; Apple clang version 21.0.0 (clang-2100.4.1.1)
+; macOS x86-64，-O0；真实目标文件反汇编（AT&T 语法）。
+; 不是 8086 源码；重定位将在链接时填入最终地址。
+
+CHECK_LOCAL.o:	file format mach-o 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+
+0000000000000000 <_main>:
+       0: 55                           	pushq	%rbp # 保存调用者的栈帧寄存器
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 83 ec 70                  	subq	$0x70, %rsp # 分配栈空间
+       8: 48 8b 05 00 00 00 00         	movq	(%rip), %rax            ## 0xf <_main+0xf>
+		000000000000000b:  X86_64_RELOC_GOT_LOAD	___stack_chk_guard@GOTPCREL
+       f: 48 8b 00                     	movq	(%rax), %rax
+      12: 48 89 45 f8                  	movq	%rax, -0x8(%rbp)
+      16: c7 45 9c 00 00 00 00         	movl	$0x0, -0x64(%rbp)
+      1d: 48 8d 7d a0                  	leaq	-0x60(%rbp), %rdi
+      21: 48 8d 35 00 00 00 00         	leaq	(%rip), %rsi            ## 0x28 <_main+0x28>
+		0000000000000024:  X86_64_RELOC_SIGNED	l___const.main.table # 局部数组的初始化常量
+      28: ba 51 00 00 00               	movl	$0x51, %edx
+      2d: e8 00 00 00 00               	callq	0x32 <_main+0x32> # 过程调用；目标符号见下一行重定位记录
+		000000000000002e:  X86_64_RELOC_BRANCH	_memcpy # 将初始数据复制到局部数组
+      32: 48 8d 3d 28 01 00 00         	leaq	0x128(%rip), %rdi       ## 0x161 <_report_error+0x81>
+		0000000000000035:  X86_64_RELOC_SIGNED	__cstring
+      39: e8 00 00 00 00               	callq	0x3e <_main+0x3e> # 过程调用；目标符号见下一行重定位记录
+		000000000000003a:  X86_64_RELOC_BRANCH	_puts
+      3e: c7 45 98 01 00 00 00         	movl	$0x1, -0x68(%rbp)
+      45: 83 7d 98 09                  	cmpl	$0x9, -0x68(%rbp) # 比较循环边界或乘积
+      49: 77 5e                        	ja	0xa9 <_main+0xa9> # 无符号数越界时退出循环
+      4b: c7 45 94 01 00 00 00         	movl	$0x1, -0x6c(%rbp)
+      52: 83 7d 94 09                  	cmpl	$0x9, -0x6c(%rbp) # 比较循环边界或乘积
+      56: 77 44                        	ja	0x9c <_main+0x9c> # 无符号数越界时退出循环
+      58: 8b 45 98                     	movl	-0x68(%rbp), %eax
+      5b: 83 e8 01                     	subl	$0x1, %eax
+      5e: 89 c0                        	movl	%eax, %eax
+      60: 89 c1                        	movl	%eax, %ecx
+      62: 48 8d 45 a0                  	leaq	-0x60(%rbp), %rax
+      66: 48 6b c9 09                  	imulq	$0x9, %rcx, %rcx # 行偏移乘 9，每项占 1 字节
+      6a: 48 01 c8                     	addq	%rcx, %rax
+      6d: 8b 4d 94                     	movl	-0x6c(%rbp), %ecx
+      70: 83 e9 01                     	subl	$0x1, %ecx
+      73: 89 c9                        	movl	%ecx, %ecx
+      75: 0f b6 04 08                  	movzbl	(%rax,%rcx), %eax # 读取数组字节并零扩展
+      79: 8b 4d 98                     	movl	-0x68(%rbp), %ecx
+      7c: 0f af 4d 94                  	imull	-0x6c(%rbp), %ecx # 计算整数乘积
+      80: 39 c8                        	cmpl	%ecx, %eax # 比较循环边界或乘积
+      82: 74 0b                        	je	0x8f <_main+0x8f> # 相等时跳过错误报告
+      84: 8b 7d 98                     	movl	-0x68(%rbp), %edi
+      87: 8b 75 94                     	movl	-0x6c(%rbp), %esi
+      8a: e8 00 00 00 00               	callq	0x8f <_main+0x8f> # 过程调用；目标符号见下一行重定位记录
+		000000000000008b:  X86_64_RELOC_BRANCH	_report_error
+      8f: eb 00                        	jmp	0x91 <_main+0x91> # 跳转至循环或后续代码
+      91: 8b 45 94                     	movl	-0x6c(%rbp), %eax
+      94: 83 c0 01                     	addl	$0x1, %eax
+      97: 89 45 94                     	movl	%eax, -0x6c(%rbp)
+      9a: eb b6                        	jmp	0x52 <_main+0x52> # 跳转至循环或后续代码
+      9c: eb 00                        	jmp	0x9e <_main+0x9e> # 跳转至循环或后续代码
+      9e: 8b 45 98                     	movl	-0x68(%rbp), %eax
+      a1: 83 c0 01                     	addl	$0x1, %eax
+      a4: 89 45 98                     	movl	%eax, -0x68(%rbp)
+      a7: eb 9c                        	jmp	0x45 <_main+0x45> # 跳转至循环或后续代码
+      a9: 48 8d 3d b5 00 00 00         	leaq	0xb5(%rip), %rdi        ## 0x165 <_report_error+0x85>
+		00000000000000ac:  X86_64_RELOC_SIGNED	__cstring
+      b0: e8 00 00 00 00               	callq	0xb5 <_main+0xb5> # 过程调用；目标符号见下一行重定位记录
+		00000000000000b1:  X86_64_RELOC_BRANCH	_puts
+      b5: 48 8b 05 00 00 00 00         	movq	(%rip), %rax            ## 0xbc <_main+0xbc>
+		00000000000000b8:  X86_64_RELOC_GOT_LOAD	___stack_chk_guard@GOTPCREL
+      bc: 48 8b 00                     	movq	(%rax), %rax
+      bf: 48 8b 4d f8                  	movq	-0x8(%rbp), %rcx
+      c3: 48 39 c8                     	cmpq	%rcx, %rax
+      c6: 75 08                        	jne	0xd0 <_main+0xd0>
+      c8: 31 c0                        	xorl	%eax, %eax
+      ca: 48 83 c4 70                  	addq	$0x70, %rsp
+      ce: 5d                           	popq	%rbp
+      cf: c3                           	retq # 返回调用者
+      d0: e8 00 00 00 00               	callq	0xd5 <_main+0xd5> # 过程调用；目标符号见下一行重定位记录
+		00000000000000d1:  X86_64_RELOC_BRANCH	___stack_chk_fail
+      d5: 66 66 2e 0f 1f 84 00 00 00 00 00     	nopw	%cs:(%rax,%rax)
+
+00000000000000e0 <_report_error>:
+      e0: 55                           	pushq	%rbp # 保存调用者的栈帧寄存器
+      e1: 48 89 e5                     	movq	%rsp, %rbp
+      e4: 48 83 ec 10                  	subq	$0x10, %rsp # 分配栈空间
+      e8: 89 7d fc                     	movl	%edi, -0x4(%rbp)
+      eb: 89 75 f8                     	movl	%esi, -0x8(%rbp)
+      ee: 8b 75 fc                     	movl	-0x4(%rbp), %esi
+      f1: 8b 55 f8                     	movl	-0x8(%rbp), %edx
+      f4: 48 8d 3d 76 00 00 00         	leaq	0x76(%rip), %rdi        ## 0x171 <_report_error+0x91>
+		00000000000000f7:  X86_64_RELOC_SIGNED	__cstring
+      fb: b0 00                        	movb	$0x0, %al
+      fd: e8 00 00 00 00               	callq	0x102 <_report_error+0x22> # 过程调用；目标符号见下一行重定位记录
+		00000000000000fe:  X86_64_RELOC_BRANCH	_printf
+     102: 48 83 c4 10                  	addq	$0x10, %rsp
+     106: 5d                           	popq	%rbp
+     107: c3                           	retq # 返回调用者
