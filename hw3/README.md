@@ -34,10 +34,6 @@ cc -std=c11 -Wall -Wextra -O0 SUM.c -o sum
 
 已有 `HOST64.txt` 是 Windows x86-64 反汇编材料，本次 C 程序使用 macOS 原生编译执行。
 
-## 本次运行截图
+## 真实运行截图
 
-下图是本次实际执行记录页面的截图，展示程序输出和自动核对结果。汇编使用 JWasm 生成 DOS EXE，再用 Unicorn 执行 16 位指令并模拟所需 DOS 服务；C 使用 macOS 原生执行。它不是完整 DOS 系统或 DOSBox 的窗口截图。测试日期：2026-11-06。
-
-![运行成功与输出核对](images/run-success.png)
-
-[查看完整运行日志](images/run-log.txt)
+待在真实 DOS 环境中运行后补充。当前不提供仿真结果截图作为运行证明。
