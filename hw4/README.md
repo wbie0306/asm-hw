@@ -73,3 +73,11 @@ objdump -dr CHECK_LOCAL.o
 ## 验证
 
 C 的三种构建均通过严格警告检查，运行输出逐字匹配预期。两个 ASM 程序经 JWasm 组装，均为零错误、零警告；生成的 DOS EXE 经 Unicorn 16 位指令仿真，模拟所用 DOS 输出及退出服务，输出与预期一致，退出状态为零且栈平衡。该检查未在完整 DOS 系统中运行。
+
+## 本次运行截图
+
+下图是本次实际执行记录页面的截图，展示程序输出和自动核对结果。汇编使用 JWasm 生成 DOS EXE，再用 Unicorn 执行 16 位指令并模拟所需 DOS 服务；C 使用 macOS 原生执行。它不是完整 DOS 系统或 DOSBox 的窗口截图。测试日期：2026-11-06。
+
+![运行成功与输出核对](images/run-success.png)
+
+[查看完整运行日志](images/run-log.txt)

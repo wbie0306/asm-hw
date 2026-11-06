@@ -1,0 +1,7 @@
+[HELLO.ASM] JWasm: 0 errors, 0 warnings
+Hello, World!
+PASS: output matched; exit=0; stack balanced
+
+[DEBUG.txt machine code]
+Hello, World!
+PASS: exit=0; stack balanced

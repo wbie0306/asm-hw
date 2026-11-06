@@ -1,0 +1,14 @@
+[LOOP.ASM] JWasm: 0 errors, 0 warnings
+a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+PASS: output matched; exit=0; stack balanced
+
+[JUMP.ASM] JWasm: 0 errors, 0 warnings
+a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+PASS: output matched; exit=0; stack balanced
+
+[ASCII.c ] native execution
+a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+PASS: output matched; exit=0
